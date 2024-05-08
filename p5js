@@ -1,0 +1,38 @@
+let fireflies = [];// create the array for fireflies
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);// fills the whole screen
+  for (let i = 0; i < 30; i++) //for loop that has the amount of fireflies.
+    fireflies.push(new Firefly(random(width), random(height)));//random width and random height
+}
+
+function draw() {
+  background(0, 0, 50);//background color dark blue
+  fireflies.forEach(f => { f.update(); f.display(); });//update and displays the fireflies constantly
+}
+
+class Firefly {
+  constructor(x, y) {
+    this.pos = createVector(x, y);//from where the firefly will move
+    this.vel = p5.Vector.random2D().mult(2);//how fast the firefly will move
+  }
+
+  update() {
+    this.pos.add(this.vel);
+    this.edges();
+  }
+
+  edges() {// places the circle back in the canvas
+    if (this.pos.x > width) this.pos.x = 0;
+    else if (this.pos.x < 0) this.pos.x = width;
+    if (this.pos.y > height) this.pos.y = 0;
+    else if (this.pos.y < 0) this.pos.y = height;
+  }
+
+  display() {
+		fill(255)// color the ellipse white
+		strokeWeight(20)// the size of the outline
+    stroke(255, 215, 0, 80);//color of the outline now its yellow
+    ellipse(this.pos.x, this.pos.y, 10);//goes to the positon of x and y and size is 10
+  }
+}
